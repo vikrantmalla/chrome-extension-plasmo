@@ -2,20 +2,49 @@ import React from "react"
 import { useState } from "react"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
+  const [tasks, setTasks] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (inputValue.trim() !== '') {
+      setTasks([...tasks, inputValue.trim()]);
+      setInputValue('');
+    }
+  };
+
+  const handleTaskRemoval = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(index, 1);
+    setTasks(updatedTasks);
+  };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 16
-      }}>
-      <h2>
-        Hello {`${data} !!!`}
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-    </div>
+    <div className="App">
+    <h1>Todo List</h1>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Enter a new task..."
+      />
+      <button type="submit">Add Task</button>
+    </form>
+    <ul>
+      {tasks.map((task, index) => (
+        <li key={index}>
+          {task}
+          <button onClick={() => handleTaskRemoval(index)}>Remove</button>
+        </li>
+      ))}
+    </ul>
+  </div>
+
   )
 }
 
