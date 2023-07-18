@@ -1,15 +1,14 @@
-import React from "react"
-import { useState } from "react"
+import React, { useState, type ChangeEvent, type FormEvent } from "react";
 
 function IndexPopup() {
-  const [tasks, setTasks] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [tasks, setTasks] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (inputValue.trim() !== '') {
       setTasks([...tasks, inputValue.trim()]);
@@ -17,7 +16,7 @@ function IndexPopup() {
     }
   };
 
-  const handleTaskRemoval = (index) => {
+  const handleTaskRemoval = (index: number) => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
@@ -25,7 +24,7 @@ function IndexPopup() {
 
   return (
     <div className="App">
-    <h1>Todo List</h1>
+    <h1>Todo Listdfgfdg</h1>
     <form onSubmit={handleSubmit}>
       <input
         type="text"
