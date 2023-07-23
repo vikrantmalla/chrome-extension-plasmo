@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import { MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
+import "./styles/styles.css";
 
 function IndexPopup() {
   const [tasks, setTasks] = useState<string[]>([])
@@ -37,19 +39,21 @@ function IndexPopup() {
     <div className="App">
       <h1>Todo List</h1>
       <form onSubmit={handleSubmit}>
-        <input
+        <div className="input-container">
+          <input
           type="text"
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Enter a new task..."
         />
-        <button type="submit">Add Task</button>
+        <button type="submit"><MdAdd/></button>
+        </div>
       </form>
-      <ul>
+      <ul className="list-container">
         {tasks.map((task, index) => (
           <li key={index}>
             {task}
-            <button onClick={() => handleTaskRemoval(index)}>Remove</button>
+            <button onClick={() => handleTaskRemoval(index)}><MdOutlineDeleteOutline/></button>
           </li>
         ))}
       </ul>
