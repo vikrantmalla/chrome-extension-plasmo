@@ -17,4 +17,13 @@
 .list-container li {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    text-transform: capitalize;
+}
+
+.list-tools {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }

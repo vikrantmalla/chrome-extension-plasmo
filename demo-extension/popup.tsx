@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
+import { BiEdit } from "react-icons/bi"
 import "./styles/styles.css";
 
 function IndexPopup() {
   const [tasks, setTasks] = useState<string[]>([])
   const [inputValue, setInputValue] = useState<string>("")
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   // Load tasks from localStorage on component mount
   useEffect(() => {
@@ -24,10 +26,23 @@ function IndexPopup() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (inputValue.trim() !== "") {
-      setTasks([...tasks, inputValue.trim()])
-      setInputValue("")
+      if (editIndex !== null) {
+        // If editIndex is not null, it means we are editing an existing task
+        const updatedTasks = [...tasks];
+        updatedTasks[editIndex] = inputValue.trim();
+        setTasks(updatedTasks);
+        setEditIndex(null); // Reset editIndex after editing
+      } else {
+        setTasks([...tasks, inputValue.trim()]);
+      }
+      setInputValue("");
     }
   }
+
+  const handleEditTask = (index: number) => {
+    setEditIndex(index);
+    setInputValue(tasks[index]);
+  };
 
   const handleTaskRemoval = (index: number) => {
     const updatedTasks = [...tasks]
@@ -35,25 +50,29 @@ function IndexPopup() {
     setTasks(updatedTasks)
   }
 
+
   return (
     <div className="App">
       <h1>Todo List</h1>
       <form onSubmit={handleSubmit}>
         <div className="input-container">
           <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter a new task..."
-        />
-        <button type="submit"><MdAdd/></button>
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Enter a new task..."
+          />
+          <button type="submit"><MdAdd /></button>
         </div>
       </form>
       <ul className="list-container">
         {tasks.map((task, index) => (
-          <li key={index}>
+          <li key={index} className="list">
             {task}
-            <button onClick={() => handleTaskRemoval(index)}><MdOutlineDeleteOutline/></button>
+            <div className="list-tools">
+              <button onClick={() => handleEditTask(index)}><BiEdit /></button>
+              <button onClick={() => handleTaskRemoval(index)}><MdOutlineDeleteOutline /></button>
+            </div>
           </li>
         ))}
       </ul>
