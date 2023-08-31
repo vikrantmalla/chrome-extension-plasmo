@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.input-container {
+/* .input-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -30,4 +30,4 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-}
+} */
