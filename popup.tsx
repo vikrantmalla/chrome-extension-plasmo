@@ -57,23 +57,26 @@ function IndexPopup() {
   return (
     <>
       <div className="App p-4">
-        <h1 className="">Todo List</h1>
+        <div className="mb-5">
+          <h1 className="text-base font-medium">TaskTracker</h1>
+        </div>
         <form onSubmit={handleSubmit}>
-          <div className="input-container">
+          <div className="flex flex-row justify-center items-center gap-4 border">
             <input
+              className="p-2"
               type="text"
               value={inputValue}
               onChange={handleInputChange}
               placeholder="Enter a new task..."
             />
-            <button type="submit"><MdAdd /></button>
+            <button className="p-2" type="submit"><MdAdd /></button>
           </div>
         </form>
-        <ul className="list-container">
+        <ul className="list-none flex flex-col justify-between px-1 mt-3">
           {tasks.map((task, index) => (
-            <li key={index} className="list">
+            <li key={index} className="flex justify-between items-center capitalize text-sm font-normal">
               {task}
-              <div className="list-tools">
+              <div className="flex justify-center items-center gap-3">
                 <button onClick={() => handleEditTask(index)}><BiEdit /></button>
                 <button onClick={() => handleTaskRemoval(index)}><MdOutlineDeleteOutline /></button>
               </div>
